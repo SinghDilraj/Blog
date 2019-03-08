@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Blog.Models.Classes;
+using Blog.Models.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -19,11 +21,23 @@ namespace Blog.Controllers
             return View();
         }
 
-        //[HttpPost]
-        //public ActionResult Create()
-        //{
-        //    return View();
-        //}
+        [HttpPost]
+        public ActionResult Create(CreateHomeViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+
+            BlogPost post = new BlogPost
+            {
+                Title = model.Title,
+                Subtitle = model.Subtitle,
+                ImageURL = model.ImageURL
+            };
+
+            return RedirectToAction(nameof(HomeController.Index));
+        }
 
         public ActionResult About()
         {

@@ -1,4 +1,6 @@
-﻿  <!-- Page Header -->
+﻿@model CreateHomeViewModel
+
+  <!-- Page Header -->
 <header class="masthead" style="background-image: url('/img/post-sample-image.jpg')">
     <div class="overlay"></div>
     <div class="container">
@@ -17,32 +19,25 @@
 <!-- Main Content -->
 <div class="container">
     <div class="row">
-        <form name="sentMessage" id="contactForm" novalidate>
+        <form name="sentMessage" id="contactForm" method="post" novalidate>
             <div class="control-group">
                 <div class="form-group floating-label-form-group controls">
-                    <label>Name</label>
-                    <input type="text" class="form-control" placeholder="Name" id="name" required data-validation-required-message="Please enter your name.">
+                    @Html.LabelFor(p => p.Title, "Title")
+                    @Html.TextBoxFor(p => p.Title, new { @class = "form-control", placeholder = "Title" })
                     <p class="help-block text-danger"></p>
                 </div>
             </div>
             <div class="control-group">
                 <div class="form-group floating-label-form-group controls">
-                    <label>Email Address</label>
-                    <input type="email" class="form-control" placeholder="Email Address" id="email" required data-validation-required-message="Please enter your email address.">
+                    @Html.LabelFor(p => p.Subtitle, "Subtitle")
+                    @Html.TextBoxFor(p => p.Subtitle, new { @class = "form-control", placeholder = "Subtitle" })
                     <p class="help-block text-danger"></p>
                 </div>
             </div>
             <div class="control-group">
                 <div class="form-group col-xs-12 floating-label-form-group controls">
-                    <label>Phone Number</label>
-                    <input type="tel" class="form-control" placeholder="Phone Number" id="phone" required data-validation-required-message="Please enter your phone number.">
-                    <p class="help-block text-danger"></p>
-                </div>
-            </div>
-            <div class="control-group">
-                <div class="form-group floating-label-form-group controls">
-                    <label>Message</label>
-                    <textarea rows="5" class="form-control" placeholder="Message" id="message" required data-validation-required-message="Please enter a message."></textarea>
+                    @Html.LabelFor(p => p.ImageURL, "ImageURL")
+                    @Html.TextBoxFor(p => p.ImageURL, new { @class = "form-control", placeholder = "ImageURL" })
                     <p class="help-block text-danger"></p>
                 </div>
             </div>
