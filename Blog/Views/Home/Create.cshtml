@@ -19,32 +19,54 @@
 <!-- Main Content -->
 <div class="container">
     <div class="row">
-        <form method="post">
-            <div class="control-group">
-                <div class="form-group floating-label-form-group controls">
-                    @Html.LabelFor(p => p.Title, "Title")
-                    @Html.TextBoxFor(p => p.Title, new { @class = "form-control", placeholder = "Title" })
-                    @Html.ValidationMessageFor(p => p.Title)
-                </div>
+        <form method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                @Html.LabelFor(p => p.Title, "Title")
+                @Html.TextBoxFor(p => p.Title, new { @class = "form-control", placeholder = "Title" })
+                @Html.ValidationMessageFor(p => p.Title)
             </div>
-            <div class="control-group">
-                <div class="form-group floating-label-form-group controls">
-                    @Html.LabelFor(p => p.Body, "Body")
-                    @Html.TextBoxFor(p => p.Body, new { @class = "form-control", placeholder = "Body" })
-                    @Html.ValidationMessageFor(p => p.Body)
-                </div>
+
+            <div class="form-group">
+                @Html.LabelFor(p => p.Body, "Body")
+                @Html.TextBoxFor(p => p.Body, new { @class = "form-control", placeholder = "Body" })
+                @Html.ValidationMessageFor(p => p.Body)
             </div>
-            <div class="control-group">
-                <div class="form-group controls">
-                    @Html.LabelFor(p => p.Published, "Publish ? ")
-                    @Html.CheckBoxFor(p => p.Published, new { @class = "form-control"})
-                    @Html.ValidationMessageFor(p => p.Published)
-                </div>
+
+            <div class="form-check m-4">
+                @Html.CheckBoxFor(p => p.Published, new { @class = "form-check-input"})
+                @Html.LabelFor(p => p.Published, "Publish ? ", new { @class = "form-check-label" })
+                @Html.ValidationMessageFor(p => p.Published)
             </div>
-            <br>
+
+            <div class="form-group">
+                <input type="file" name="Image" class="form-control pb-5 pt-3" />
+                @Html.ValidationMessageFor(p => p.Image)
+            </div>
+
             <div class="form-group">
                 <button type="submit" class="btn btn-primary">Create</button>
             </div>
         </form>
+
+
+
+
+
+            <form method="post" novalidate>
+                <div class="control-group">
+                    
+                </div>
+                <div class="control-group">
+                    
+                </div>
+                <div class="control-group">
+                    
+                </div>
+                <div class="control-group">
+                    
+                </div>
+                <br>
+                
+            </form>
     </div>
 </div>
