@@ -13,10 +13,17 @@ namespace Blog.Controllers
             return View();
         }
 
+        [HttpGet]
         public ActionResult Create()
         {
             return View();
         }
+
+        //[HttpPost]
+        //public ActionResult Create()
+        //{
+        //    return View();
+        //}
 
         public ActionResult About()
         {
