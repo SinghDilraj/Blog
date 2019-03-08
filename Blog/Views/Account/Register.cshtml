@@ -1,9 +1,20 @@
 ﻿@model Blog.Models.RegisterViewModel
-@{
-    ViewBag.Title = "Register";
-}
 
-<h2>@ViewBag.Title.</h2>
+<!-- Page Header -->
+<header class="masthead" style="background-image: url('/img/post-sample-image.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto">
+                <div class="page-heading">
+                    <h1>Register a new Account</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- BODY  -->
 
 @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
