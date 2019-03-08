@@ -12,7 +12,7 @@ namespace Blog.Models.ViewModels
         public string Title { get; set; }
 
         [Required]
-        public string Subtitle { get; set; }
+        public string Body { get; set; }
 
         [Required]
         public string ImageURL { get; set; }

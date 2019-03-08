@@ -32,7 +32,7 @@ namespace Blog.Controllers
             BlogPost post = new BlogPost
             {
                 Title = model.Title,
-                Subtitle = model.Subtitle,
+                Body = model.Body,
                 ImageURL = model.ImageURL
             };
 

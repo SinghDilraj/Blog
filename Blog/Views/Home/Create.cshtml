@@ -19,18 +19,20 @@
 <!-- Main Content -->
 <div class="container">
     <div class="row">
-        <form name="sentMessage" id="contactForm" method="post" novalidate>
+        <form method="post" novalidate>
             <div class="control-group">
                 <div class="form-group floating-label-form-group controls">
                     @Html.LabelFor(p => p.Title, "Title")
                     @Html.TextBoxFor(p => p.Title, new { @class = "form-control", placeholder = "Title" })
+                    @Html.ValidationMessageFor(p => p.Title)
                     <p class="help-block text-danger"></p>
                 </div>
             </div>
             <div class="control-group">
                 <div class="form-group floating-label-form-group controls">
-                    @Html.LabelFor(p => p.Subtitle, "Subtitle")
-                    @Html.TextBoxFor(p => p.Subtitle, new { @class = "form-control", placeholder = "Subtitle" })
+                    @Html.LabelFor(p => p.Body, "Body")
+                    @Html.TextBoxFor(p => p.Body, new { @class = "form-control", placeholder = "Body" })
+                    @Html.ValidationMessageFor(p => p.Body)
                     <p class="help-block text-danger"></p>
                 </div>
             </div>
@@ -38,13 +40,14 @@
                 <div class="form-group col-xs-12 floating-label-form-group controls">
                     @Html.LabelFor(p => p.ImageURL, "ImageURL")
                     @Html.TextBoxFor(p => p.ImageURL, new { @class = "form-control", placeholder = "ImageURL" })
+                    @Html.ValidationMessageFor(p => p.ImageURL)
                     <p class="help-block text-danger"></p>
                 </div>
             </div>
             <br>
             <div id="success"></div>
             <div class="form-group">
-                <button type="submit" class="btn btn-primary" id="sendMessageButton">Send</button>
+                <button type="submit" class="btn btn-primary">Send</button>
             </div>
         </form>
     </div>
