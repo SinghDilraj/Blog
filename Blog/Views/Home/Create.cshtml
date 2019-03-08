@@ -34,6 +34,13 @@
                     @Html.ValidationMessageFor(p => p.Body)
                 </div>
             </div>
+            <div class="control-group">
+                <div class="form-group controls">
+                    @Html.LabelFor(p => p.Published, "Publish ? ")
+                    @Html.CheckBoxFor(p => p.Published, new { @class = "form-control"})
+                    @Html.ValidationMessageFor(p => p.Published)
+                </div>
+            </div>
             <br>
             <div class="form-group">
                 <button type="submit" class="btn btn-primary">Create</button>

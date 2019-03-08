@@ -194,8 +194,8 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="img\about-bg.jpg" />
-    <Content Include="img\contact-bg.jpg" />
     <Content Include="img\home-bg.jpg" />
+    <Content Include="img\contact-bg.jpg" />
     <Content Include="img\post-bg.jpg" />
     <Content Include="img\post-sample-image.jpg" />
     <Content Include="js\clean-blog.min.js" />

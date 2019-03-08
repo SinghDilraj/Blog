@@ -13,5 +13,8 @@ namespace Blog.Models.ViewModels
 
         [Required]
         public string Body { get; set; }
+
+        [Required]
+        public bool Published { get; set; }
     }
 }
