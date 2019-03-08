@@ -19,7 +19,7 @@
 <!-- Main Content -->
 <div class="container">
     <div class="row">
-        <form method="post" enctype="multipart/form-data">
+        <form method="post" >
             <div class="form-group">
                 @Html.LabelFor(p => p.Title, "Title")
                 @Html.TextBoxFor(p => p.Title, new { @class = "form-control", placeholder = "Title" })
@@ -33,7 +33,7 @@
             </div>
 
             <div class="form-check m-4">
-                @Html.CheckBoxFor(p => p.Published, new { @class = "form-check-input"})
+                @Html.CheckBoxFor(p => p.Published, new { @class = "form-check-input", @checked="true"})
                 @Html.LabelFor(p => p.Published, "Publish ? ", new { @class = "form-check-label" })
                 @Html.ValidationMessageFor(p => p.Published)
             </div>

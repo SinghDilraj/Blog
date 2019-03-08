@@ -26,13 +26,15 @@ namespace Blog.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View();
+                return View(model);
             }
 
             BlogPost post = new BlogPost
             {
                 Title = model.Title,
                 Body = model.Body,
+                Published = model.Published,
+                Image = model.Image
             };
 
             return RedirectToAction(nameof(HomeController.Index));
