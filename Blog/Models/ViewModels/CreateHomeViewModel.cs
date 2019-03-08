@@ -13,8 +13,5 @@ namespace Blog.Models.ViewModels
 
         [Required]
         public string Body { get; set; }
-
-        [Required]
-        public string ImageURL { get; set; }
     }
 }

@@ -201,6 +201,7 @@
     <Content Include="js\clean-blog.min.js" />
     <Content Include="js\contact_me.js" />
     <Content Include="js\jqBootstrapValidation.js" />
+    <Content Include="js\jquery.validate.min.js" />
     <Content Include="vendor\bootstrap\css\bootstrap.min.css" />
     <Content Include="vendor\bootstrap\js\bootstrap.bundle.min.js" />
     <Content Include="vendor\fontawesome-free\css\all.css" />

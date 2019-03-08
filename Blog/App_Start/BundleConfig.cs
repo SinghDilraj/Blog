@@ -9,6 +9,7 @@ namespace Blog
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/scripts").Include(
+                      "~/js/jquery.validate.min",
                       "~/vendor/jquery/jquery.min.js",
                       "~/vendor/bootstrap/js/bootstrap.bundle.min.js",
                       "~/js/clean-blog.min.js",

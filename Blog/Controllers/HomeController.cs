@@ -33,7 +33,6 @@ namespace Blog.Controllers
             {
                 Title = model.Title,
                 Body = model.Body,
-                ImageURL = model.ImageURL
             };
 
             return RedirectToAction(nameof(HomeController.Index));
