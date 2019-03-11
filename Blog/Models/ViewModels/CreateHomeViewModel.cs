@@ -17,7 +17,7 @@ namespace Blog.Models.ViewModels
         [Required]
         public bool Published { get; set; }
 
-        [Required]
+        //[Required]
         public HttpPostedFileBase Image { get; set; }
     }
 }
