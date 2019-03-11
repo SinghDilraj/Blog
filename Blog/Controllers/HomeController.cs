@@ -30,6 +30,7 @@ namespace Blog.Controllers
                  where post.UserId == userId
                  select new CreateHomeViewModel
                  {
+                     Id = post.Id,
                      Title = post.Title,
                      Body = post.Body,
                      Published = post.Published
@@ -125,6 +126,39 @@ namespace Blog.Controllers
             DbContext.SaveChanges();
 
             return RedirectToAction(nameof(HomeController.Index));
+        }
+
+        [HttpGet]
+        public ActionResult Edit(int? id)
+        {
+            if (!id.HasValue)
+            {
+                return RedirectToAction(nameof(HomeController.Index));
+            }
+
+            var userId = User.Identity.GetUserId();
+
+            var post = DbContext.BlogPosts.FirstOrDefault(
+                p => p.Id == id && p.UserId == userId);
+
+            if (post == null)
+            {
+                return RedirectToAction(nameof(HomeController.Index));
+            }
+
+            var model = new CreateHomeViewModel();
+            model.Title = post.Title;
+            model.Body = post.Body;
+            model.Published = post.Published;
+            model.ImageUrl = post.Image;
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult Edit(int id, CreateHomeViewModel model)
+        {
+            return SavePost(id, model);
         }
 
         public ActionResult About()

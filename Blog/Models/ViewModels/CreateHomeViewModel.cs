@@ -8,6 +8,8 @@ namespace Blog.Models.ViewModels
 {
     public class CreateHomeViewModel
     {
+        public int Id { get; set; }
+
         [Required]
         public string Title { get; set; }
 
@@ -19,5 +21,7 @@ namespace Blog.Models.ViewModels
 
         //[Required]
         public HttpPostedFileBase Image { get; set; }
+
+        public string ImageUrl { get; set; }
     }
 }
