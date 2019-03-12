@@ -33,8 +33,11 @@ namespace Blog.Controllers
                      Id = post.Id,
                      Title = post.Title,
                      Body = post.Body,
-                     Published = post.Published
-                     //Image = post.Image
+                     Published = post.Published,
+                     ImageUrl = post.Image,
+                     DateCreated = post.DateCreated,
+                     DateUpdated = post.DateUpdated,
+
                  }).ToList();
 
             return View(postsQuery);
@@ -159,6 +162,53 @@ namespace Blog.Controllers
         public ActionResult Edit(int id, CreateHomeViewModel model)
         {
             return SavePost(id, model);
+        }
+
+        public ActionResult Delete(int? id)
+        {
+            if (!id.HasValue)
+            {
+                return RedirectToAction(nameof(HomeController.Index));
+            }
+
+            var userId = User.Identity.GetUserId();
+
+            var post = DbContext.BlogPosts.FirstOrDefault(
+                p => p.Id == id && p.UserId == userId);
+
+            if (post == null)
+            {
+                return RedirectToAction(nameof(HomeController.Index));
+            }
+
+            DbContext.BlogPosts.Remove(post);
+
+            DbContext.SaveChanges();
+
+            return RedirectToAction(nameof(HomeController.Index));
+        }
+
+        public ActionResult Details(int? id)
+        {
+            if (!id.HasValue)
+                return RedirectToAction(nameof(HomeController.Index));
+
+            var userId = User.Identity.GetUserId();
+
+            var post = DbContext.BlogPosts.FirstOrDefault(p =>
+            p.Id == id.Value &&
+            p.UserId == userId);
+
+            if (post == null)
+                return RedirectToAction(nameof(HomeController.Index));
+
+            var model = new CreateHomeViewModel();
+            model.Title = post.Title;
+            model.Body = post.Body;
+            model.Published = post.Published;
+            model.ImageUrl = post.Image;
+
+            return View(model);
         }
 
         public ActionResult About()

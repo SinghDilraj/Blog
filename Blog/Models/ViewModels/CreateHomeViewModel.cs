@@ -22,6 +22,10 @@ namespace Blog.Models.ViewModels
         //[Required]
         public HttpPostedFileBase Image { get; set; }
 
+        public DateTimeOffset DateCreated { get; set;}
+
+        public DateTimeOffset DateUpdated {get; set; }
+
         public string ImageUrl { get; set; }
     }
 }
