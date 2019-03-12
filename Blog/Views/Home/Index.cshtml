@@ -41,14 +41,25 @@
                                 @post.Title
                             </h2>
                             <h3 class="post-subtitle">
-                                @post.Body
+                                @if (post.Body.Length >= 10)
+                                {
+                                    @post.Body.Substring(0, 9);
+                                }
+                                else
+                                {
+                                    @post.Body.Substring(0, 1);
+                                }
+                                ...
                             </h3>
                         </a>
                         <p class="post-meta">
                             Created => @post.DateCreated.DateTime.ToString(), Updated => @if (post.DateUpdated.Year != 0001)
                             {@post.DateUpdated.DateTime.ToString()}
                         </p>
-                        <img src="@post.ImageUrl" alt="@post.Title" />
+                        <div class="container-fluid mb-5">
+                            <img src="@post.ImageUrl" alt="@post.Title" class="img-fluid" />
+                        </div>
+
                         <div class="container-fluid">
                             <a href=@Url.Action("Edit", "Home", new { id = post.Id}) class="btn btn-warning">Edit</a>
                             <a href=@Url.Action("Delete", "Home", new { id = post.Id}) class="btn btn-danger">Delete</a>

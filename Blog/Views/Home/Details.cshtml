@@ -23,7 +23,9 @@
         <div class="block">
             <div class="row">
                 <div class="span4">
-                    <img class="img-left" src=@Model.ImageUrl height=500/>
+                    <div class="container-fluid mb-5">
+                        <img src="@Model.ImageUrl" alt="@Model.Title" class="img-fluid" />
+                    </div>
                     <div class="content-heading"><h3>@Model.Title &nbsp </h3></div>
                     <p class="post-meta">Date Created => @Model.DateCreated, Date Updated => @Model.DateUpdated</p>
                     <p>@Model.Body</p>

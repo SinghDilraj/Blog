@@ -19,7 +19,7 @@
 <!-- Main Content -->
 <div class="container">
     <div class="row">
-        <form method="post" >
+        <form method="post" enctype="multipart/form-data">
             <div class="form-group">
                 @Html.LabelFor(p => p.Title, "Title")
                 @Html.TextBoxFor(p => p.Title, new { @class = "form-control", placeholder = "Title" })
