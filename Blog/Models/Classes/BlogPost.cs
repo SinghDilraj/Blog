@@ -15,7 +15,7 @@ namespace Blog.Models.Classes
         public string UserId { get; set; }
         public string Image { get; set; }
         public DateTimeOffset DateCreated { get; set; }
-        public DateTimeOffset DateUpdated { get; set; }
+        public DateTimeOffset? DateUpdated { get; set; }
 
         public BlogPost()
         {

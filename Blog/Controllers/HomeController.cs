@@ -216,9 +216,26 @@ namespace Blog.Controllers
             return View();
         }
 
+        [HttpGet]
         public ActionResult Contact()
         {
             return View();
+        }
+
+        [HttpPost]
+        public ActionResult Contact(ContactHomeViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            Blog.Models.Classes.EmailService contact = new Blog.Models.Classes.EmailService();
+
+            contact.Send("dilrajkehra@gmail.com", "Contact Form Blog Website", $"From => Name => {model.Name} Email => {model.Email}, {model.Message}");
+
+            ModelState.AddModelError(string.Empty, "Thank You for Your Message.");
+            return View(model);
         }
     }
 }
