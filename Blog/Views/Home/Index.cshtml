@@ -45,7 +45,8 @@
                             </h3>
                         </a>
                         <p class="post-meta">
-                            Created => @post.DateCreated.DateTime.ToString(), Updated => @post.DateUpdated
+                            Created => @post.DateCreated.DateTime.ToString(), Updated => @if (post.DateUpdated.Year != 0001)
+                            {@post.DateUpdated.DateTime.ToString()}
                         </p>
                         <img src="@post.ImageUrl" alt="@post.Title" />
                         <div class="container-fluid">

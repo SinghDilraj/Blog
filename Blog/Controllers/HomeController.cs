@@ -36,7 +36,7 @@ namespace Blog.Controllers
                      Published = post.Published,
                      ImageUrl = post.Image,
                      DateCreated = post.DateCreated,
-                     DateUpdated = post.DateUpdated,
+                     DateUpdated = post.DateUpdated
 
                  }).ToList();
 
@@ -109,6 +109,7 @@ namespace Blog.Controllers
             post.Title = model.Title;
             post.Body = model.Body;
             post.Published = model.Published;
+            post.DateUpdated = model.DateUpdated;
 
             //Handling file upload
             if (model.Image != null)
@@ -149,11 +150,14 @@ namespace Blog.Controllers
                 return RedirectToAction(nameof(HomeController.Index));
             }
 
+            post.DateUpdated = DateTime.Now;
+
             var model = new CreateHomeViewModel();
             model.Title = post.Title;
             model.Body = post.Body;
             model.Published = post.Published;
             model.ImageUrl = post.Image;
+            model.DateUpdated = post.DateUpdated;
 
             return View(model);
         }
@@ -161,6 +165,7 @@ namespace Blog.Controllers
         [HttpPost]
         public ActionResult Edit(int id, CreateHomeViewModel model)
         {
+            model.DateUpdated = DateTime.Now;
             return SavePost(id, model);
         }
 
@@ -191,7 +196,9 @@ namespace Blog.Controllers
         public ActionResult Details(int? id)
         {
             if (!id.HasValue)
+            {
                 return RedirectToAction(nameof(HomeController.Index));
+            }
 
             var userId = User.Identity.GetUserId();
 
@@ -200,7 +207,9 @@ namespace Blog.Controllers
             p.UserId == userId);
 
             if (post == null)
+            {
                 return RedirectToAction(nameof(HomeController.Index));
+            }
 
             var model = new CreateHomeViewModel();
             model.Title = post.Title;
