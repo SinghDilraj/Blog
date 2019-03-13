@@ -34,9 +34,12 @@
                     <li class="nav-item">
                         @Html.ActionLink("Posts", "Index", "Home", null, new { @class = "nav-link" })
                     </li>
-                    <li class="nav-item">
-                        @Html.ActionLink("Create", "Create", "Home", null, new { @class = "nav-link" })
-                    </li>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <li class="nav-item">
+                            @Html.ActionLink("Create", "Create", "Home", null, new { @class = "nav-link" })
+                        </li>
+                    }
                     <li class="nav-item">
                         @Html.ActionLink("About", "About", "Home", null, new { @class = "nav-link" })
                     <li class="nav-item">

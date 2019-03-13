@@ -50,9 +50,13 @@
                         </div>
 
                         <div class="container-fluid">
-                            <a href=@Url.Action("Edit", "Home", new { id = post.Id}) class="btn btn-warning">Edit</a>
-                            <a href=@Url.Action("Delete", "Home", new { id = post.Id}) class="btn btn-danger">Delete</a>
                             <a href=@Url.Action("Details", "Home", new { id = post.Id}) class="btn btn-primary">Details</a>
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <a href=@Url.Action("Edit", "Home", new { id = post.Id}) class="btn btn-warning">Edit</a>
+                                <a href=@Url.Action("Delete", "Home", new { id = post.Id}) class="btn btn-danger">Delete</a>
+                            }
+
                         </div>
                     </div>
                     <hr>

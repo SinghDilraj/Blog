@@ -21,7 +21,7 @@ namespace Blog.Controllers
             
         }
 
-        [Authorize (Roles= "Admin")]
+        [AllowAnonymous]
         public ActionResult Index()
         {
 
@@ -56,6 +56,7 @@ namespace Blog.Controllers
             return SavePost(null, model);
         }
 
+        [Authorize(Roles = "Admin")]
         private ActionResult SavePost(int? id, CreateHomeViewModel model)
         {
             if (!ModelState.IsValid)
@@ -189,7 +190,7 @@ namespace Blog.Controllers
             return RedirectToAction(nameof(HomeController.Index));
         }
 
-        [Authorize(Roles = "Admin")]
+        [AllowAnonymous]
         public ActionResult Details(int? id)
         {
             if (!id.HasValue)
@@ -214,20 +215,20 @@ namespace Blog.Controllers
             return View(model);
         }
 
-        [Authorize(Roles = "Admin")]
+        [AllowAnonymous]
         public ActionResult About()
         {
             return View();
         }
 
-        [Authorize(Roles = "Admin")]
+        [AllowAnonymous]
         [HttpGet]
         public ActionResult Contact()
         {
             return View();
         }
 
-        [Authorize(Roles = "Admin")]
+        [AllowAnonymous]
         [HttpPost]
         public ActionResult Contact(ContactHomeViewModel model)
         {
