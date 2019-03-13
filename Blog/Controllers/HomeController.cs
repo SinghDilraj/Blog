@@ -21,6 +21,7 @@ namespace Blog.Controllers
             
         }
 
+        [Authorize (Roles= "Admin, Moderator")]
         public ActionResult Index()
         {
             var userId = User.Identity.GetUserId();
@@ -43,12 +44,14 @@ namespace Blog.Controllers
             return View(postsQuery);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public ActionResult Create()
         {
             return View();
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public ActionResult Create(CreateHomeViewModel model)
         {
@@ -132,6 +135,7 @@ namespace Blog.Controllers
             return RedirectToAction(nameof(HomeController.Index));
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public ActionResult Edit(int? id)
         {
@@ -157,18 +161,20 @@ namespace Blog.Controllers
             model.Body = post.Body;
             model.Published = post.Published;
             model.ImageUrl = post.Image;
-            model.DateUpdated = post.DateUpdated;
+            model.DateCreated = post.DateCreated;
+            model.DateUpdated = DateTime.Now;
 
             return View(model);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public ActionResult Edit(int id, CreateHomeViewModel model)
         {
-            model.DateUpdated = DateTime.Now;
             return SavePost(id, model);
         }
 
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(int? id)
         {
             if (!id.HasValue)
@@ -193,6 +199,7 @@ namespace Blog.Controllers
             return RedirectToAction(nameof(HomeController.Index));
         }
 
+        [Authorize(Roles = "Admin, Moderator")]
         public ActionResult Details(int? id)
         {
             if (!id.HasValue)
@@ -220,17 +227,20 @@ namespace Blog.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = "Admin, Moderator")]
         public ActionResult About()
         {
             return View();
         }
 
+        [Authorize(Roles = "Admin, Moderator")]
         [HttpGet]
         public ActionResult Contact()
         {
             return View();
         }
 
+        [Authorize(Roles = "Admin, Moderator")]
         [HttpPost]
         public ActionResult Contact(ContactHomeViewModel model)
         {
