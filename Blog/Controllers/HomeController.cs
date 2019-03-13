@@ -24,8 +24,11 @@ namespace Blog.Controllers
         [AllowAnonymous]
         public ActionResult Index()
         {
+            List<CreateHomeViewModel> postsQuery;
 
-            var postsQuery =
+            if (User.IsInRole("Admin"))
+            {
+                postsQuery =
                 (from post in DbContext.BlogPosts
                  select new CreateHomeViewModel
                  {
@@ -38,6 +41,24 @@ namespace Blog.Controllers
                      DateUpdated = post.DateUpdated
 
                  }).ToList();
+            }
+            else
+            {
+                postsQuery =
+                (from post in DbContext.BlogPosts
+                 where post.Published == true
+                 select new CreateHomeViewModel
+                 {
+                     Id = post.Id,
+                     Title = post.Title,
+                     Body = post.Body,
+                     Published = post.Published,
+                     ImageUrl = post.Image,
+                     DateCreated = post.DateCreated,
+                     DateUpdated = post.DateUpdated
+
+                 }).ToList();
+            }
 
             return View(postsQuery);
         }
