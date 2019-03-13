@@ -18,6 +18,12 @@
 
 <!-- BODY  -->
 <div class="container">
+    <div class="mb-5">
+        <h4><u>USER ROLES</u></h4>
+        <h5>ADMIN USER can CREATE, EDIT and VIEW POSTS.</h5>
+        <h5>MODERATOR USER can only VIEW POSTS.</h5>
+        <h5>LOCAL USERS can not ACCESS the CONTENT of this BLOG.</h5>
+    </div>
     <div class="row">
         <section id="loginForm">
             @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
