@@ -219,8 +219,20 @@ namespace Blog.Controllers
                 return RedirectToAction(nameof(HomeController.Index));
             }
 
-            var post = DbContext.BlogPosts.FirstOrDefault(p =>
+            BlogPost post;
+
+            if (User.IsInRole("Admin"))
+            {
+                post = DbContext.BlogPosts.FirstOrDefault(p =>
             p.Id == id.Value);
+            }
+            else
+            {
+                post = DbContext.BlogPosts.FirstOrDefault(p =>
+            p.Id == id.Value && p.Published == true);
+            }
+
+            
 
             if (post == null)
             {
