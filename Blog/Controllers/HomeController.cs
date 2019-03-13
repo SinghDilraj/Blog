@@ -160,10 +160,6 @@ namespace Blog.Controllers
             model.Title = post.Title;
             model.Body = post.Body;
             model.Published = post.Published;
-            model.ImageUrl = post.Image;
-            model.DateCreated = post.DateCreated;
-            model.DateUpdated = DateTime.Now;
-
             return View(model);
         }
 
@@ -171,6 +167,7 @@ namespace Blog.Controllers
         [HttpPost]
         public ActionResult Edit(int id, CreateHomeViewModel model)
         {
+            model.DateUpdated = DateTime.Now;
             return SavePost(id, model);
         }
 
