@@ -24,11 +24,9 @@ namespace Blog.Controllers
         [Authorize (Roles= "Admin")]
         public ActionResult Index()
         {
-            var userId = User.Identity.GetUserId();
 
             var postsQuery =
                 (from post in DbContext.BlogPosts
-                 where post.UserId == userId
                  select new CreateHomeViewModel
                  {
                      Id = post.Id,
@@ -65,10 +63,8 @@ namespace Blog.Controllers
                 return View(model);
             }
 
-            var userId = User.Identity.GetUserId();
 
-            if (DbContext.BlogPosts.Any(p => p.UserId == userId &&
-            p.Title == model.Title &&
+            if (DbContext.BlogPosts.Any(p => p.Title == model.Title &&
             (!id.HasValue || p.Id != id.Value)))
             {
                 ModelState.AddModelError(nameof(CreateHomeViewModel.Title),
@@ -96,12 +92,11 @@ namespace Blog.Controllers
             if (!id.HasValue)
             {
                 post = new BlogPost();
-                post.UserId = userId;
                 DbContext.BlogPosts.Add(post);
             }
             else
             {
-                post = DbContext.BlogPosts.FirstOrDefault(p => p.Id == id && p.UserId == userId);
+                post = DbContext.BlogPosts.FirstOrDefault(p => p.Id == id);
 
                 if (post == null)
                 {
@@ -147,7 +142,7 @@ namespace Blog.Controllers
             var userId = User.Identity.GetUserId();
 
             var post = DbContext.BlogPosts.FirstOrDefault(
-                p => p.Id == id && p.UserId == userId);
+                p => p.Id == id);
 
             if (post == null)
             {
@@ -179,10 +174,8 @@ namespace Blog.Controllers
                 return RedirectToAction(nameof(HomeController.Index));
             }
 
-            var userId = User.Identity.GetUserId();
-
             var post = DbContext.BlogPosts.FirstOrDefault(
-                p => p.Id == id && p.UserId == userId);
+                p => p.Id == id);
 
             if (post == null)
             {
@@ -204,11 +197,8 @@ namespace Blog.Controllers
                 return RedirectToAction(nameof(HomeController.Index));
             }
 
-            var userId = User.Identity.GetUserId();
-
             var post = DbContext.BlogPosts.FirstOrDefault(p =>
-            p.Id == id.Value &&
-            p.UserId == userId);
+            p.Id == id.Value);
 
             if (post == null)
             {
