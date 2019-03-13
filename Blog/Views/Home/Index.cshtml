@@ -1,8 +1,4 @@
-﻿@{
-    ViewBag.Title = "Home Page";
-}
-
-@model List<CreateHomeViewModel>
+﻿@model List<CreateHomeViewModel>
 
 <!-- Page Header -->
 <header class="masthead" style="background-image: url('/img/home-bg.jpg')">
@@ -28,7 +24,10 @@
             {
                 <div class="post-preview">
                     <h1 class="post-title">No Post to See.</h1>
-                    <h2 class="post-subtitle">Head to the <a href=@Url.Action("Create", "Home")><mark> Create Post Page </mark></a> to create a Blog Post.</h2>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <h2 class="post-subtitle">Head to the <a href=@Url.Action("Create", "Home")><mark> Create Post Page </mark></a> to create a Blog Post.</h2>
+                    }
                 </div>
             }
             else
@@ -44,7 +43,7 @@
                         <p class="post-meta">
                             Created => @post.DateCreated.DateTime.ToString(), Updated => @if (post.DateUpdated.Year != 0001)
                             {@post.DateUpdated.DateTime.ToString()}
-                            </p>
+                        </p>
                         <div class="container-fluid mb-5">
                             <img src="@post.ImageUrl" alt="@post.Title" class="img-fluid" />
                         </div>
