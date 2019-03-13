@@ -21,7 +21,7 @@ namespace Blog.Controllers
             
         }
 
-        [Authorize (Roles= "Admin, Moderator")]
+        [Authorize (Roles= "Admin")]
         public ActionResult Index()
         {
             var userId = User.Identity.GetUserId();
@@ -196,7 +196,7 @@ namespace Blog.Controllers
             return RedirectToAction(nameof(HomeController.Index));
         }
 
-        [Authorize(Roles = "Admin, Moderator")]
+        [Authorize(Roles = "Admin")]
         public ActionResult Details(int? id)
         {
             if (!id.HasValue)
@@ -224,20 +224,20 @@ namespace Blog.Controllers
             return View(model);
         }
 
-        [Authorize(Roles = "Admin, Moderator")]
+        [Authorize(Roles = "Admin")]
         public ActionResult About()
         {
             return View();
         }
 
-        [Authorize(Roles = "Admin, Moderator")]
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public ActionResult Contact()
         {
             return View();
         }
 
-        [Authorize(Roles = "Admin, Moderator")]
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public ActionResult Contact(ContactHomeViewModel model)
         {
