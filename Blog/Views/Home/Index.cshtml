@@ -40,22 +40,11 @@
                             <h2 class="post-title">
                                 @post.Title
                             </h2>
-                            <h3 class="post-subtitle">
-                                @if (post.Body.Length >= 10)
-                                {
-                                    @post.Body.Substring(0, 9);
-                                }
-                                else
-                                {
-                                    @post.Body.Substring(0, 1);
-                                }
-                                ...
-                            </h3>
                         </a>
                         <p class="post-meta">
                             Created => @post.DateCreated.DateTime.ToString(), Updated => @if (post.DateUpdated.Year != 0001)
-                            {@post.DateUpdated.DateTime.ToString()}
-                        </p>
+                            {@post.DateUpdated.DateTime.ToString()} never
+                            </p>
                         <div class="container-fluid mb-5">
                             <img src="@post.ImageUrl" alt="@post.Title" class="img-fluid" />
                         </div>

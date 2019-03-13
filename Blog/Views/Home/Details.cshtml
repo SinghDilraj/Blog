@@ -28,7 +28,7 @@
                     </div>
                     <div class="content-heading"><h3>@Model.Title &nbsp </h3></div>
                     <p class="post-meta">Date Created => @Model.DateCreated, Date Updated => @Model.DateUpdated</p>
-                    <p>@Model.Body</p>
+                    <p>@Html.Raw(Model.Body)</p>
                 </div>
             </div>
             <br />
