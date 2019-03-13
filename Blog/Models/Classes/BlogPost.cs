@@ -14,6 +14,7 @@ namespace Blog.Models.Classes
         public virtual ApplicationUser User { get; set; }
         public string UserId { get; set; }
         public string Image { get; set; }
+        public string Slug { get; set; }
         public DateTimeOffset DateCreated { get; set; }
         public DateTimeOffset DateUpdated { get; set; }
 

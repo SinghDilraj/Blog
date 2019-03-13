@@ -9,6 +9,8 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Blog.Controllers
 {
@@ -37,6 +39,7 @@ namespace Blog.Controllers
                      Body = post.Body,
                      Published = post.Published,
                      ImageUrl = post.Image,
+                     Slug = post.Slug,
                      DateCreated = post.DateCreated,
                      DateUpdated = post.DateUpdated
 
@@ -54,6 +57,7 @@ namespace Blog.Controllers
                      Body = post.Body,
                      Published = post.Published,
                      ImageUrl = post.Image,
+                     Slug = post.Slug,
                      DateCreated = post.DateCreated,
                      DateUpdated = post.DateUpdated
 
@@ -129,6 +133,7 @@ namespace Blog.Controllers
             post.Title = model.Title;
             post.Body = model.Body;
             post.Published = model.Published;
+            post.Slug = ToUrlSlug(model.Title);
             post.DateUpdated = model.DateUpdated;
 
             //Handling file upload
@@ -150,6 +155,30 @@ namespace Blog.Controllers
             DbContext.SaveChanges();
 
             return RedirectToAction(nameof(HomeController.Index));
+        }
+
+        private string ToUrlSlug(string value)
+        {
+            //First to lower case
+            value = value.ToLowerInvariant();
+
+            //Remove all accents
+            var bytes = Encoding.GetEncoding("Cyrillic").GetBytes(value);
+            value = Encoding.ASCII.GetString(bytes);
+
+            //Replace spaces
+            value = Regex.Replace(value, @"\s", "-", RegexOptions.Compiled);
+
+            //Remove invalid chars
+            value = Regex.Replace(value, @"[^a-z0-9\s-_]", "", RegexOptions.Compiled);
+
+            //Trim dashes from end
+            value = value.Trim('-', '_');
+
+            //Replace double occurences of - or _
+            value = Regex.Replace(value, @"([-_]){2,}", "$1", RegexOptions.Compiled);
+
+            return value;
         }
 
         [Authorize(Roles = "Admin")]
@@ -177,6 +206,7 @@ namespace Blog.Controllers
             model.Title = post.Title;
             model.Body = post.Body;
             model.Published = post.Published;
+            model.Slug = post.Slug;
             return View(model);
         }
 
