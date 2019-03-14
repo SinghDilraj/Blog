@@ -27,7 +27,17 @@
                         <img src="@Model.ImageUrl" alt="@Model.Title" class="img-fluid" />
                     </div>
                     <div class="content-heading"><h3>@Model.Title &nbsp </h3></div>
-                    <p class="post-meta">Date Created => @Model.DateCreated, Date Updated => @Model.DateUpdated</p>
+                    <p class="post-meta">
+                        Date Created => @Model.DateCreated, Date Updated => 
+                        @if (Model.DateUpdated.Year != 0001)
+                        {
+                            @Model.DateUpdated.DateTime.ToString()
+                        }
+                        else
+                        {
+                            <text>never</text>
+                        }
+                    </p>
                     <p>@Html.Raw(Model.Body)</p>
                 </div>
             </div>

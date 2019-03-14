@@ -16,7 +16,7 @@ namespace Blog.Models.Classes
         public string Image { get; set; }
         public string Slug { get; set; }
         public DateTimeOffset DateCreated { get; set; }
-        public DateTimeOffset? DateUpdated { get; set; }
+        public DateTimeOffset DateUpdated { get; set; }
         public List<Comment> Comments { get; set; }
 
         public BlogPost()
