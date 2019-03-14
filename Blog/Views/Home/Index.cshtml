@@ -35,7 +35,7 @@
                 foreach (CreateHomeViewModel post in Model)
                 {
                     <div class="post-preview">
-                        <a href=@Url.Action("Details", "Home", new { id = post.Id})>
+                        <a href=@Url.Action("Details", "Home", new { slug = post.Slug})>
                             <h2 class="post-title">
                                 @post.Title
                             </h2>
@@ -49,7 +49,7 @@
                         </div>
 
                         <div class="container-fluid">
-                            <a href=@Url.Action("Details", "Home", new { id = post.Id}) class="btn btn-primary">Details</a>
+                            <a href=@Url.Action("Details", "Home", new { slug = post.Slug}) class="btn btn-primary">Details</a>
                             @if (User.IsInRole("Admin"))
                             {
                                 <a href=@Url.Action("Edit", "Home", new { id = post.Id}) class="btn btn-warning">Edit</a>

@@ -242,9 +242,10 @@ namespace Blog.Controllers
         }
 
         [AllowAnonymous]
-        public ActionResult Details(int? id)
+        [Route("Blog/{slug}")]
+        public ActionResult Details(string slug)
         {
-            if (!id.HasValue)
+            if (string.IsNullOrEmpty(slug))
             {
                 return RedirectToAction(nameof(HomeController.Index));
             }
@@ -254,12 +255,12 @@ namespace Blog.Controllers
             if (User.IsInRole("Admin"))
             {
                 post = DbContext.BlogPosts.FirstOrDefault(p =>
-            p.Id == id.Value);
+            p.Slug == slug);
             }
             else
             {
                 post = DbContext.BlogPosts.FirstOrDefault(p =>
-            p.Id == id.Value && p.Published == true);
+            p.Slug == slug && p.Published == true);
             }
 
             
