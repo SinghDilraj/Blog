@@ -28,7 +28,7 @@ namespace Blog.Models.ViewModels
 
         public DateTimeOffset DateCreated { get; set;}
 
-        public DateTimeOffset DateUpdated {get; set; }
+        public DateTimeOffset? DateUpdated {get; set; }
 
         public string ImageUrl { get; set; }
     }

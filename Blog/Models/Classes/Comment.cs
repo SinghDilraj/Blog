@@ -5,21 +5,15 @@ using System.Web;
 
 namespace Blog.Models.Classes
 {
-    public class BlogPost
+    public class Comment
     {
         public int Id { get; set; }
-        public string Title { get; set; }
         public string Body { get; set; }
-        public bool Published { get; set; }
-        public virtual ApplicationUser User { get; set; }
-        public string UserId { get; set; }
-        public string Image { get; set; }
-        public string Slug { get; set; }
         public DateTimeOffset DateCreated { get; set; }
         public DateTimeOffset? DateUpdated { get; set; }
-        public List<Comment> Comments { get; set; }
+        public string ModifyingReason { get; set; }
 
-        public BlogPost()
+        public Comment()
         {
             DateCreated = DateTimeOffset.Now;
         }

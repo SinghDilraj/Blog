@@ -12,10 +12,12 @@ namespace Blog.Models
     public class ApplicationUser : IdentityUser
     {
         public virtual List<BlogPost> BlogPosts { get; set; }
+        public virtual List<Comment> Comments { get; set; }
 
         public ApplicationUser()
         {
             BlogPosts = new List<BlogPost>();
+            Comments = new List<Comment>();
         }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
@@ -35,6 +37,8 @@ namespace Blog.Models
         }
 
         public DbSet<BlogPost> BlogPosts { get; set; }
+
+        public DbSet<Comment> Comments { get; set; }
 
         public static ApplicationDbContext Create()
         {
