@@ -24,6 +24,7 @@ namespace Blog.Controllers
         }
 
         [AllowAnonymous]
+        [HttpGet]
         public ActionResult Index()
         {
             List<CreateHomeViewModel> postsQuery;
@@ -65,6 +66,64 @@ namespace Blog.Controllers
             }
 
             return View(postsQuery);
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        public ActionResult Index(IndexHomeViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                ModelState.AddModelError(nameof(IndexHomeViewModel.Query),
+                    "Please enter a search query");
+                return RedirectToAction(nameof(HomeController.Index));
+            }
+
+            List<CreateHomeViewModel> query;
+
+            if (User.IsInRole("Admin"))
+            {
+                query = (from post in DbContext.BlogPosts
+                            where post.Title.ToLower().Contains(model.Query.ToLower()) || post.Body.ToLower().Contains(model.Query.ToLower()) || post.Slug.ToLower().Contains(model.Query.ToLower())
+                            select new CreateHomeViewModel
+                            {
+                                Id = post.Id,
+                                Title = post.Title,
+                                Body = post.Body,
+                                Published = post.Published,
+                                ImageUrl = post.Image,
+                                Slug = post.Slug,
+                                DateCreated = post.DateCreated,
+                                DateUpdated = post.DateUpdated
+
+                            }).ToList();
+            }
+            else
+            {
+                query = (from post in DbContext.BlogPosts
+                            where post.Title.ToLower().Contains(model.Query.ToLower()) || post.Body.ToLower().Contains(model.Query.ToLower()) || post.Slug.ToLower().Contains(model.Query.ToLower()) && post.Published == true
+                        select new CreateHomeViewModel
+                        {
+                            Id = post.Id,
+                            Title = post.Title,
+                            Body = post.Body,
+                            Published = post.Published,
+                            ImageUrl = post.Image,
+                            Slug = post.Slug,
+                            DateCreated = post.DateCreated,
+                            DateUpdated = post.DateUpdated
+
+                        }).ToList();
+            }
+
+            return View("SearchResults", query);
+        }
+
+        [AllowAnonymous]
+        [HttpGet]
+        public ActionResult SearchResults(List<CreateHomeViewModel> PostQuery)
+        {
+            return View(PostQuery);
         }
 
         [Authorize(Roles = "Admin")]
