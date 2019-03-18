@@ -175,6 +175,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Models\Classes\Comment.cs" />
+    <Compile Include="Models\ViewModels\CommentHomeViewModel.cs" />
     <Compile Include="Models\ViewModels\ContactHomeViewModel.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -1967,6 +1968,7 @@
     <Content Include="scripts\tinymce\langs\readme.md" />
     <Content Include="Views\Home\_Search.cshtml" />
     <Content Include="Views\Home\SearchResults.cshtml" />
+    <Content Include="Views\Home\_Comment.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
