@@ -1,47 +1,61 @@
 ﻿@model CreateHomeViewModel
 
-    <!-- Page Header -->
-    <header class="masthead" style="background-image: url('/img/post-sample-image.jpg')">
-        <div class="overlay"></div>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8 col-md-10 mx-auto">
-                    <div class="page-heading">
-                        <h1>Post Details</h1>
-                        <span class="subheading">Blog Post Details</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
-
+<!-- Page Header -->
+<header class="masthead" style="background-image: url('/img/post-sample-image.jpg')">
+    <div class="overlay"></div>
     <div class="container">
         <div class="row">
-            <h2 class="page-heading">BLOG DETAILS</h2>
-        </div>
-
-        <div class="block">
-            <div class="row">
-                <div class="span4">
-                    <div class="container-fluid mb-5">
-                        <img src="@Model.ImageUrl" alt="@Model.Title" class="img-fluid" />
-                    </div>
-                    <div class="content-heading"><h3>@Model.Title &nbsp </h3></div>
-                    <p class="post-meta">
-                        Date Created => @Model.DateCreated, Date Updated => 
-                        @if (Model.DateUpdated.Year != 0001)
-                        {
-                            @Model.DateUpdated.DateTime.ToString()
-                        }
-                        else
-                        {
-                            <text>never</text>
-                        }
-                    </p>
-                    <p>@Html.Raw(Model.Body)</p>
+            <div class="col-lg-8 col-md-10 mx-auto">
+                <div class="page-heading">
+                    <h1>Post Details</h1>
+                    <span class="subheading">Blog Post Details</span>
                 </div>
             </div>
-            <br />
         </div>
-
     </div>
+</header>
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-md-10">
+            <h2 class="page-heading">BLOG DETAILS</h2>
+        </div>
+    </div>
+
+    <div class="block">
+        <div class="row">
+            <div class="span4">
+                <div class="container-fluid mb-5">
+                    <img src="@Model.ImageUrl" alt="@Model.Title" class="img-fluid" />
+                </div>
+                <div class="content-heading"><h3>@Model.Title &nbsp </h3></div>
+                <p class="post-meta">
+                    Date Created => @Model.DateCreated, Date Updated =>
+                    @if (Model.DateUpdated.Year != 0001)
+                    {
+                        @Model.DateUpdated.DateTime.ToString()
+                    }
+                    else
+                    {
+                        <text>never</text>
+                    }
+                </p>
+                <p>@Html.Raw(Model.Body)</p>
+            </div>
+            @*@foreach (var comment in comments)
+                {
+                    <div class="container">
+                        <p>comment.Body</p>
+                        <a >delete</a>
+                        <a>edit</a>
+                    </div>
+                }*@
+            <div class="col-lg-6 col-md-4">
+                <hr />
+                @Html.Partial("_Comment", new CommentHomeViewModel())
+            </div>
+        </div>
+        <br />
+    </div>
+
+</div>
