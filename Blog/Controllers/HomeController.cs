@@ -302,6 +302,7 @@ namespace Blog.Controllers
 
         [AllowAnonymous]
         [Route("Blog/{slug}")]
+        [HttpGet]
         public ActionResult Details(string slug)
         {
             if (string.IsNullOrEmpty(slug))
@@ -334,8 +335,29 @@ namespace Blog.Controllers
             model.Body = post.Body;
             model.Published = post.Published;
             model.ImageUrl = post.Image;
-
+            model.Comments = post.Comments;
             return View(model);
+        }
+
+        [AllowAnonymous]
+        [Route("Blog/{slug}")]
+        [HttpPost]
+        public ActionResult Comment(int? id, CommentHomeViewModel model)
+        {
+            if (!id.HasValue || !ModelState.IsValid)
+            {
+                return RedirectToAction(nameof(HomeController.Index));
+            }
+
+            Comment comment = new Comment();
+
+            comment.Body = model.Body;
+
+            BlogPost post = DbContext.BlogPosts.FirstOrDefault(p => p.Id == id);
+
+            post.Comments.Add(comment);
+
+            return RedirectToAction(nameof(HomeController.Details), new { slug = post.Slug});
         }
 
         [AllowAnonymous]

@@ -1,12 +1,13 @@
 ﻿@model CommentHomeViewModel
 <!-- Search form -->
-<form method="post">
+@using (Html.BeginForm("Comment", "Home", new { id = Model.Id }, FormMethod.Post))
+{
     <div class="form-group">
-        @Html.LabelFor(p => p.Body, "Comment Here", new { @class="text-uppercase font-weight-bold"})
+        @Html.LabelFor(p => p.Body, "Comment Here", new { @class = "text-uppercase font-weight-bold" })
         @Html.TextBoxFor(p => p.Body, new { @class = "form-control", placeholder = "Comment" })
         @Html.ValidationMessageFor(p => p.Body)
     </div>
     <div class="form-group">
         <button type="submit" class="btn btn-success">Comment</button>
     </div>
-</form>
+}

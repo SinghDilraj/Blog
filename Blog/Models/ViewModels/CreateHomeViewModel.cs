@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Blog.Models.Classes;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -23,6 +24,8 @@ namespace Blog.Models.ViewModels
 
         [Required]
         public HttpPostedFileBase Image { get; set; }
+
+        public List<Comment> Comments { get; set; } = new List<Comment>();
 
         public string Slug { get; set; }
 

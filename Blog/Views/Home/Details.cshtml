@@ -42,18 +42,21 @@
                 </p>
                 <p>@Html.Raw(Model.Body)</p>
             </div>
-            @*@foreach (var comment in comments)
+            @if (Model.Comments.Any())
+            {
+                foreach (var comment in Model.Comments)
                 {
                     <div class="container">
                         <p>comment.Body</p>
-                        <a >delete</a>
+                        <a>delete</a>
                         <a>edit</a>
                     </div>
-                }*@
+                }
+            }
             <div class="col-lg-6 col-md-4">
                 <hr />
-                @Html.Partial("_Comment", new CommentHomeViewModel())
-            </div>
+                @Html.Partial("_Comment", new CommentHomeViewModel() { Id = Model.Id })
+            </div> 
         </div>
         <br />
     </div>
