@@ -45,14 +45,23 @@
                         </div>
                         @foreach (var comment in Model.Comments)
                         {
-                        <div class="col-md-10">
-                            <p class="text-info">@comment.Body</p>
-                            @if (User.IsInRole("Admin") || User.IsInRole("Moderator"))
-                            {
-                                @Html.ActionLink("Edit ", "EditComment", "Home", new { id = comment.Id}, new { @class = "text-warning" })
-                                @Html.ActionLink("Delete ", "DeleteComment", "Home", new { id = comment.Id }, new { @class = "text-danger" })
-                            }
-                        </div>
+                            <div class="col-md-10">
+                                @*<p class="text-muted">@comment.User.UserName</p>*@
+                                <p class="text-info">
+                                    <span>
+                                        @comment.Body
+                                    </span>
+                                    @if (User.IsInRole("Admin") || User.IsInRole("Moderator"))
+                                    {
+                                        <span class="ml-4">
+                                            @Html.ActionLink("Edit ", "EditComment", "Home", new { id = comment.Id }, new { @class = "text-warning" })
+                                        </span>
+                                        <span class="ml-4">
+                                            @Html.ActionLink("Delete ", "DeleteComment", "Home", new { id = comment.Id }, new { @class = "text-danger" })
+                                        </span>
+                                    }
+                                </p>
+                            </div>
                         }
                     </div>
                 </div>
