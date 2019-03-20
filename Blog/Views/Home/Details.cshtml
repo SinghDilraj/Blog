@@ -40,18 +40,17 @@
             {
                 <div class="container">
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-12 mb-4">
                             <h2>Comments</h2>
                         </div>
                         @foreach (var comment in Model.Comments)
                         {
-                            <div class="col-md-10">
-                                @if (!string.IsNullOrEmpty(comment.User.UserName))
-                                {
-                                    <p class="text-muted">@comment.User.UserName</p>
-                                }
-                                <p class="text-info">
-                                    <span>
+                            <div class="col-md-7 border border-primary rounded-left rounded-right rounded-lg mb-2">
+                                    @if (!string.IsNullOrEmpty(comment.User.UserName))
+                                    {
+                                        <pre class="text-muted">By:- @comment.User.UserName</pre>
+                                    }
+                                    <span class="text-info">
                                         @comment.Body
                                     </span>
                                     @if (User.IsInRole("Admin") || User.IsInRole("Moderator"))
@@ -63,16 +62,18 @@
                                             @Html.ActionLink("Delete ", "DeleteComment", "Home", new { id = comment.Id }, new { @class = "text-danger" })
                                         </span>
                                     }
-                                </p>
                             </div>
                         }
                     </div>
                 </div>
             }
-            <div class="col-lg-6 col-md-4">
-                <hr />
-                @Html.Partial("_Comment", new CommentHomeViewModel(), new ViewDataDictionary { { "id", Model.Id } })
-            </div>
+                <div class="col-lg-6 col-md-4">
+                    <hr />
+                    @if (!string.IsNullOrEmpty(User.Identity.Name))
+                    {
+                        @Html.Partial("_Comment", new CommentHomeViewModel(), new ViewDataDictionary { { "id", Model.Id } });
+                    }
+                </div>
         </div>
         <br />
     </div>
