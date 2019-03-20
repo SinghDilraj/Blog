@@ -1,6 +1,6 @@
 ﻿@model ContactHomeViewModel
 
-  <!-- Page Header -->
+<!-- Page Header -->
 <header class="masthead" style="background-image: url('/img/contact-bg.jpg')">
     <div class="overlay"></div>
     <div class="container">
@@ -28,7 +28,7 @@
                 <div class="control-group">
                     <div class="form-group floating-label-form-group controls">
                         @Html.LabelFor(p => p.Name, "Name")
-                        @Html.TextBoxFor(p => p.Name, new { @class= "form-control", placeholder = "Name" })
+                        @Html.TextBoxFor(p => p.Name, new { @class = "form-control", placeholder = "Name" })
                         @Html.ValidationMessageFor(p => p.Name)
                     </div>
                 </div>

@@ -263,7 +263,7 @@ namespace Blog.Controllers
             model.Body = post.Body;
             model.Published = post.Published;
             model.DateCreated = post.DateCreated;
-            model.DateUpdated = post.DateUpdated; 
+            model.DateUpdated = post.DateUpdated;
             model.Slug = post.Slug;
             return View(model);
         }
@@ -351,11 +351,12 @@ namespace Blog.Controllers
                 return RedirectToAction(nameof(HomeController.Index));
             }
 
-            Comment comment = new Comment();
-
-            comment.Body = model.Body;
-            comment.UserId = User.Identity.GetUserId();
-            comment.BlogPostId = id.Value;
+            Comment comment = new Comment
+            {
+                Body = model.Body,
+                UserId = User.Identity.GetUserId(),
+                BlogPostId = id.Value
+            };
 
             BlogPost post = DbContext.BlogPosts.FirstOrDefault(p => p.Id == id.Value);
 

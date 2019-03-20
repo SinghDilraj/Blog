@@ -29,9 +29,9 @@ namespace Blog.Models.ViewModels
 
         public string Slug { get; set; }
 
-        public DateTime DateCreated { get; set;}
+        public DateTime DateCreated { get; set; }
 
-        public DateTime? DateUpdated {get; set; }
+        public DateTime? DateUpdated { get; set; }
 
         public string ImageUrl { get; set; }
     }

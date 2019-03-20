@@ -34,7 +34,7 @@ namespace Blog.Migrations
                 var adminRole = new IdentityRole("Admin");
                 roleManager.Create(adminRole);
             }
-            
+
             //Moderator role
             if (!context.Roles.Any(p => p.Name == "Moderator"))
             {
@@ -70,7 +70,7 @@ namespace Blog.Migrations
             {
                 userManager.AddToRole(admin.Id, "Admin");
             }
-            
+
             //Creating adminuser
             ApplicationUser moderator;
 

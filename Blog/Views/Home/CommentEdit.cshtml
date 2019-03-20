@@ -21,7 +21,7 @@
         @Html.LabelFor(p => p.Body, "Comment Here", new { @class = "text-uppercase font-weight-bold" })
         @Html.TextBoxFor(p => p.Body, new { @class = "form-control", placeholder = "Comment" })
         @Html.ValidationMessageFor(p => p.Body)
-        
+
         @Html.LabelFor(p => p.ModifyingReason, "Enter Reason for Editing Here", new { @class = "text-uppercase font-weight-bold" })
         @Html.TextBoxFor(p => p.ModifyingReason, new { @class = "form-control", placeholder = "Reason" })
         @Html.ValidationMessageFor(p => p.ModifyingReason)
