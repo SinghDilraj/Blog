@@ -46,7 +46,10 @@
                         @foreach (var comment in Model.Comments)
                         {
                             <div class="col-md-10">
-                                @*<p class="text-muted">@comment.User.UserName</p>*@
+                                @if (!string.IsNullOrEmpty(comment.User.UserName))
+                                {
+                                    <p class="text-muted">@comment.User.UserName</p>
+                                }
                                 <p class="text-info">
                                     <span>
                                         @comment.Body

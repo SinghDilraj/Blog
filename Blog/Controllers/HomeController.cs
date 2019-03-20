@@ -14,7 +14,6 @@ using System.Text.RegularExpressions;
 
 namespace Blog.Controllers
 {
-    [Authorize(Roles = "Admin")]
     public class HomeController : Controller
     {
         private ApplicationDbContext DbContext;
@@ -24,7 +23,6 @@ namespace Blog.Controllers
 
         }
 
-        [AllowAnonymous]
         [HttpGet]
         public ActionResult Index()
         {
@@ -69,7 +67,6 @@ namespace Blog.Controllers
             return View(postsQuery);
         }
 
-        [AllowAnonymous]
         [HttpPost]
         public ActionResult Index(IndexHomeViewModel model)
         {
@@ -120,19 +117,20 @@ namespace Blog.Controllers
             return View("SearchResults", query);
         }
 
-        [AllowAnonymous]
         [HttpGet]
         public ActionResult SearchResults(List<CreateHomeViewModel> PostQuery)
         {
             return View(PostQuery);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public ActionResult Create()
         {
             return View();
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public ActionResult Create(CreateHomeViewModel model)
         {
@@ -239,6 +237,7 @@ namespace Blog.Controllers
             return value;
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public ActionResult Edit(int? id)
         {
@@ -269,7 +268,7 @@ namespace Blog.Controllers
             return View(model);
         }
 
-
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public ActionResult Edit(int id, CreateHomeViewModel model)
         {
@@ -277,6 +276,7 @@ namespace Blog.Controllers
             return SavePost(id, model);
         }
 
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(int? id)
         {
             if (!id.HasValue)
@@ -299,7 +299,6 @@ namespace Blog.Controllers
             return RedirectToAction(nameof(HomeController.Index));
         }
 
-        [AllowAnonymous]
         [Route("Blog/{slug}")]
         [HttpGet]
         public ActionResult Details(string slug)
@@ -342,7 +341,7 @@ namespace Blog.Controllers
             return View(model);
         }
 
-        [AllowAnonymous]
+        [Authorize]
         [Route("Blog/{slug}")]
         [HttpPost]
         public ActionResult Comment(int? id, CommentHomeViewModel model)
@@ -386,8 +385,12 @@ namespace Blog.Controllers
 
             var model = new CommentHomeViewModel();
             model.Body = comment.Body;
+            model.BlogPostId = comment.BlogPostId;
+            model.ModifyingReason = comment.ModifyingReason;
+            model.UserId = comment.UserId;
+            model.Id = comment.Id;
             model.DateUpdated = DateTimeOffset.Now;
-            return View("_Comment", model);
+            return View("CommentEdit", model);
         }
 
         [Authorize(Roles = "Admin, Moderator")]
@@ -451,20 +454,17 @@ namespace Blog.Controllers
             return RedirectToAction(nameof(HomeController.Details), new { slug = DbContext.BlogPosts.FirstOrDefault(p => p.Id == comment.BlogPostId).Slug });
         }
 
-        [AllowAnonymous]
         public ActionResult About()
         {
             return View();
         }
 
-        [AllowAnonymous]
         [HttpGet]
         public ActionResult Contact()
         {
             return View();
         }
 
-        [AllowAnonymous]
         [HttpPost]
         public ActionResult Contact(ContactHomeViewModel model)
         {

@@ -1,0 +1,32 @@
+﻿@model CommentHomeViewModel
+
+<!-- Page Header -->
+<header class="masthead" style="background-image: url('/img/home-bg.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto">
+                <div class="site-heading">
+                    <h1>Edit Comment</h1>
+                    <span class="subheading">Edit Comment Here.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+@using (Html.BeginForm("EditComment", "Home", new { id = this.ViewData["id"] }, FormMethod.Post))
+{
+    <div class="form-group">
+        @Html.LabelFor(p => p.Body, "Comment Here", new { @class = "text-uppercase font-weight-bold" })
+        @Html.TextBoxFor(p => p.Body, new { @class = "form-control", placeholder = "Comment" })
+        @Html.ValidationMessageFor(p => p.Body)
+        
+        @Html.LabelFor(p => p.ModifyingReason, "Enter Reason for Editing Here", new { @class = "text-uppercase font-weight-bold" })
+        @Html.TextBoxFor(p => p.ModifyingReason, new { @class = "form-control", placeholder = "Reason" })
+        @Html.ValidationMessageFor(p => p.ModifyingReason)
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-success">Comment</button>
+    </div>
+}

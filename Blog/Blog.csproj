@@ -1969,6 +1969,7 @@
     <Content Include="Views\Home\_Search.cshtml" />
     <Content Include="Views\Home\SearchResults.cshtml" />
     <Content Include="Views\Home\_Comment.cshtml" />
+    <Content Include="Views\Home\CommentEdit.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
