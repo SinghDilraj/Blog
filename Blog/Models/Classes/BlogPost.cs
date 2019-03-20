@@ -15,13 +15,14 @@ namespace Blog.Models.Classes
         public string UserId { get; set; }
         public string Image { get; set; }
         public string Slug { get; set; }
-        public DateTimeOffset DateCreated { get; set; }
-        public DateTimeOffset DateUpdated { get; set; }
-        public List<Comment> Comments { get; set; } = new List<Comment>();
+        public DateTime DateCreated { get; set; }
+        public DateTime? DateUpdated { get; set; }
+        public virtual List<Comment> Comments { get; set; }
 
         public BlogPost()
         {
-            DateCreated = DateTimeOffset.Now;
+            Comments = new List<Comment>();
+            DateCreated = DateTime.Now;
         }
     }
 }

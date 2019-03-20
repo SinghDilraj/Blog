@@ -1,6 +1,6 @@
 ﻿@model CommentHomeViewModel
 <!-- Search form -->
-@using (Html.BeginForm("Comment", "Home", new { id = Model.Id }, FormMethod.Post))
+@using (Html.BeginForm("Comment", "Home", new { id = this.ViewData["id"] }, FormMethod.Post))
 {
     <div class="form-group">
         @Html.LabelFor(p => p.Body, "Comment Here", new { @class = "text-uppercase font-weight-bold" })

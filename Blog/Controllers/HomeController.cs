@@ -14,13 +14,14 @@ using System.Text.RegularExpressions;
 
 namespace Blog.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class HomeController : Controller
     {
         private ApplicationDbContext DbContext;
         public HomeController()
         {
             DbContext = new ApplicationDbContext();
-            
+
         }
 
         [AllowAnonymous]
@@ -84,36 +85,36 @@ namespace Blog.Controllers
             if (User.IsInRole("Admin"))
             {
                 query = (from post in DbContext.BlogPosts
-                            where post.Title.ToLower().Contains(model.Query.ToLower()) || post.Body.ToLower().Contains(model.Query.ToLower()) || post.Slug.ToLower().Contains(model.Query.ToLower())
-                            select new CreateHomeViewModel
-                            {
-                                Id = post.Id,
-                                Title = post.Title,
-                                Body = post.Body,
-                                Published = post.Published,
-                                ImageUrl = post.Image,
-                                Slug = post.Slug,
-                                DateCreated = post.DateCreated,
-                                DateUpdated = post.DateUpdated
+                         where post.Title.ToLower().Contains(model.Query.ToLower()) || post.Body.ToLower().Contains(model.Query.ToLower()) || post.Slug.ToLower().Contains(model.Query.ToLower())
+                         select new CreateHomeViewModel
+                         {
+                             Id = post.Id,
+                             Title = post.Title,
+                             Body = post.Body,
+                             Published = post.Published,
+                             ImageUrl = post.Image,
+                             Slug = post.Slug,
+                             DateCreated = post.DateCreated,
+                             DateUpdated = post.DateUpdated
 
-                            }).ToList();
+                         }).ToList();
             }
             else
             {
                 query = (from post in DbContext.BlogPosts
-                            where post.Title.ToLower().Contains(model.Query.ToLower()) || post.Body.ToLower().Contains(model.Query.ToLower()) || post.Slug.ToLower().Contains(model.Query.ToLower()) && post.Published == true
-                        select new CreateHomeViewModel
-                        {
-                            Id = post.Id,
-                            Title = post.Title,
-                            Body = post.Body,
-                            Published = post.Published,
-                            ImageUrl = post.Image,
-                            Slug = post.Slug,
-                            DateCreated = post.DateCreated,
-                            DateUpdated = post.DateUpdated
+                         where post.Title.ToLower().Contains(model.Query.ToLower()) || post.Body.ToLower().Contains(model.Query.ToLower()) || post.Slug.ToLower().Contains(model.Query.ToLower()) && post.Published == true
+                         select new CreateHomeViewModel
+                         {
+                             Id = post.Id,
+                             Title = post.Title,
+                             Body = post.Body,
+                             Published = post.Published,
+                             ImageUrl = post.Image,
+                             Slug = post.Slug,
+                             DateCreated = post.DateCreated,
+                             DateUpdated = post.DateUpdated
 
-                        }).ToList();
+                         }).ToList();
             }
 
             return View("SearchResults", query);
@@ -126,21 +127,18 @@ namespace Blog.Controllers
             return View(PostQuery);
         }
 
-        [Authorize(Roles = "Admin")]
         [HttpGet]
         public ActionResult Create()
         {
             return View();
         }
 
-        [Authorize(Roles = "Admin")]
         [HttpPost]
         public ActionResult Create(CreateHomeViewModel model)
         {
             return SavePost(null, model);
         }
 
-        [Authorize(Roles = "Admin")]
         private ActionResult SavePost(int? id, CreateHomeViewModel model)
         {
             if (!ModelState.IsValid)
@@ -193,6 +191,7 @@ namespace Blog.Controllers
             post.Body = model.Body;
             post.Published = model.Published;
             post.Slug = ToUrlSlug(model.Title);
+            post.UserId = User.Identity.GetUserId();
             post.DateUpdated = model.DateUpdated;
 
             //Handling file upload
@@ -240,7 +239,6 @@ namespace Blog.Controllers
             return value;
         }
 
-        [Authorize(Roles = "Admin")]
         [HttpGet]
         public ActionResult Edit(int? id)
         {
@@ -265,11 +263,13 @@ namespace Blog.Controllers
             model.Title = post.Title;
             model.Body = post.Body;
             model.Published = post.Published;
+            model.DateCreated = post.DateCreated;
+            model.DateUpdated = post.DateUpdated; 
             model.Slug = post.Slug;
             return View(model);
         }
 
-        [Authorize(Roles = "Admin")]
+
         [HttpPost]
         public ActionResult Edit(int id, CreateHomeViewModel model)
         {
@@ -277,7 +277,6 @@ namespace Blog.Controllers
             return SavePost(id, model);
         }
 
-        [Authorize(Roles = "Admin")]
         public ActionResult Delete(int? id)
         {
             if (!id.HasValue)
@@ -323,7 +322,7 @@ namespace Blog.Controllers
             p.Slug == slug && p.Published == true);
             }
 
-            
+
 
             if (post == null)
             {
@@ -333,9 +332,13 @@ namespace Blog.Controllers
             var model = new CreateHomeViewModel();
             model.Title = post.Title;
             model.Body = post.Body;
+            model.Id = post.Id;
             model.Published = post.Published;
             model.ImageUrl = post.Image;
             model.Comments = post.Comments;
+            model.DateCreated = post.DateCreated;
+            model.DateUpdated = post.DateUpdated;
+            model.Slug = post.Slug;
             return View(model);
         }
 
@@ -352,12 +355,100 @@ namespace Blog.Controllers
             Comment comment = new Comment();
 
             comment.Body = model.Body;
+            comment.UserId = User.Identity.GetUserId();
+            comment.BlogPostId = id.Value;
 
-            BlogPost post = DbContext.BlogPosts.FirstOrDefault(p => p.Id == id);
+            BlogPost post = DbContext.BlogPosts.FirstOrDefault(p => p.Id == id.Value);
 
             post.Comments.Add(comment);
 
-            return RedirectToAction(nameof(HomeController.Details), new { slug = post.Slug});
+            DbContext.SaveChanges();
+
+            return RedirectToAction(nameof(HomeController.Details), new { slug = post.Slug });
+        }
+
+        [Authorize(Roles = "Admin, Moderator")]
+        [HttpGet]
+        public ActionResult EditComment(int? id)
+        {
+            if (!id.HasValue)
+            {
+                return RedirectToAction(nameof(HomeController.Index));
+            }
+
+            var comment = DbContext.Comments.FirstOrDefault(
+                p => p.Id == id);
+
+            if (comment == null)
+            {
+                return RedirectToAction(nameof(HomeController.Index));
+            }
+
+            var model = new CommentHomeViewModel();
+            model.Body = comment.Body;
+            model.DateUpdated = DateTimeOffset.Now;
+            return View("_Comment", model);
+        }
+
+        [Authorize(Roles = "Admin, Moderator")]
+        [HttpPost]
+        public ActionResult EditComment(int? id, CommentHomeViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View("_Comment", model);
+            }
+
+            Comment comment;
+
+            if (!id.HasValue)
+            {
+                comment = new Comment();
+                DbContext.Comments.Add(comment);
+            }
+            else
+            {
+                comment = DbContext.Comments.FirstOrDefault(p => p.Id == id);
+
+                if (comment == null)
+                {
+                    return RedirectToAction(nameof(HomeController.Index));
+                }
+            }
+
+            comment.Body = model.Body;
+            comment.DateUpdated = model.DateUpdated;
+            comment.Id = model.Id;
+            comment.UserId = model.UserId;
+            comment.BlogPostId = model.BlogPostId;
+            comment.ModifyingReason = model.ModifyingReason;
+
+            DbContext.SaveChanges();
+
+            return RedirectToAction(nameof(HomeController.Details), new { slug = DbContext.BlogPosts.FirstOrDefault(p => p.Id == comment.BlogPostId).Slug });
+        }
+
+        [Authorize(Roles = "Admin, Moderator")]
+        public ActionResult DeleteComment(int? id)
+        {
+            if (!id.HasValue)
+            {
+                return RedirectToAction(nameof(HomeController.Index));
+            }
+
+            var comment = DbContext.Comments.FirstOrDefault(
+                p => p.Id == id);
+
+            if (comment == null)
+            {
+                return RedirectToAction(nameof(HomeController.Index));
+            }
+
+            DbContext.Comments.Remove(comment);
+
+            DbContext.SaveChanges();
+
+            return RedirectToAction(nameof(HomeController.Details), new { slug = DbContext.BlogPosts.FirstOrDefault(p => p.Id == comment.BlogPostId).Slug });
         }
 
         [AllowAnonymous]

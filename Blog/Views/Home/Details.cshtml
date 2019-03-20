@@ -16,12 +16,6 @@
 </header>
 
 <div class="container">
-    <div class="row">
-        <div class="col-lg-8 col-md-10">
-            <h2 class="page-heading">BLOG DETAILS</h2>
-        </div>
-    </div>
-
     <div class="block">
         <div class="row">
             <div class="span4">
@@ -31,9 +25,9 @@
                 <div class="content-heading"><h3>@Model.Title &nbsp </h3></div>
                 <p class="post-meta">
                     Date Created => @Model.DateCreated, Date Updated =>
-                    @if (Model.DateUpdated.Year != 0001)
+                    @if (Model.DateUpdated.HasValue)
                     {
-                        @Model.DateUpdated.DateTime.ToString()
+                        @Model.DateUpdated.ToString()
                     }
                     else
                     {
@@ -44,19 +38,29 @@
             </div>
             @if (Model.Comments.Any())
             {
-                foreach (var comment in Model.Comments)
-                {
-                    <div class="container">
-                        <p>comment.Body</p>
-                        <a>delete</a>
-                        <a>edit</a>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <h2>Comments</h2>
+                        </div>
+                        @foreach (var comment in Model.Comments)
+                        {
+                        <div class="col-md-10">
+                            <p class="text-info">@comment.Body</p>
+                            @if (User.IsInRole("Admin") || User.IsInRole("Moderator"))
+                            {
+                                @Html.ActionLink("Edit ", "EditComment", "Home", new { id = comment.Id}, new { @class = "text-warning" })
+                                @Html.ActionLink("Delete ", "DeleteComment", "Home", new { id = comment.Id }, new { @class = "text-danger" })
+                            }
+                        </div>
+                        }
                     </div>
-                }
+                </div>
             }
             <div class="col-lg-6 col-md-4">
                 <hr />
-                @Html.Partial("_Comment", new CommentHomeViewModel() { Id = Model.Id })
-            </div> 
+                @Html.Partial("_Comment", new CommentHomeViewModel(), new ViewDataDictionary { { "id", Model.Id } })
+            </div>
         </div>
         <br />
     </div>

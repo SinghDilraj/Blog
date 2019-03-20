@@ -45,10 +45,10 @@
                             </h2>
                         </a>
                         <p class="post-meta">
-                            Created => @post.DateCreated.DateTime.ToString(), Updated =>
-                            @if (post.DateUpdated.Year != 0001)
+                            Created => @post.DateCreated.ToString(), Updated =>
+                            @if (post.DateUpdated.HasValue)
                             {
-                                @post.DateUpdated.DateTime.ToString()
+                                @post.DateUpdated.ToString()
                             }
                             else
                             {
