@@ -15,7 +15,7 @@
     </div>
 </header>
 
-@using (Html.BeginForm("EditComment", "Home", new { id = this.ViewData["id"] }, FormMethod.Post))
+@using (Html.BeginForm("EditComment", "Home", new { id = Model.Id }, FormMethod.Post))
 {
     <div class="form-group">
         @Html.LabelFor(p => p.Body, "Comment Here", new { @class = "text-uppercase font-weight-bold" })
