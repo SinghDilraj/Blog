@@ -422,9 +422,6 @@ namespace Blog.Controllers
 
             comment.Body = model.Body;
             comment.DateUpdated = model.DateUpdated;
-            comment.Id = model.Id;
-            comment.UserId = model.UserId;
-            comment.BlogPostId = model.BlogPostId;
             comment.ModifyingReason = model.ModifyingReason;
 
             DbContext.SaveChanges();
